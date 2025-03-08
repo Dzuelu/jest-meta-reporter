@@ -48,6 +48,12 @@
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.0"
   },
+  "peerDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "jest-metadata": "^1.5.4"
+  },
   "main": "dist/src/index.js",
   "license": "Apache-2.0",
   "homepage": "https://github.com/Dzuelu/jest-meta-reporter",
@@ -89,7 +95,8 @@
         {
           "outputDirectory": "test-reports"
         }
-      ]
+      ],
+      "./dist/src/index.js"
     ],
     "transform": {
       "^.+\\.[t]sx?$": [

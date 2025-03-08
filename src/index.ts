@@ -1,5 +1,3 @@
-export class Hello {
-  public sayHello() {
-    return 'hello, world!';
-  }
-}
+import { JestMetaReporter } from './meta-reporter';
+
+export default JestMetaReporter;

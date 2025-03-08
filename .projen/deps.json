@@ -1,8 +1,11 @@
 {
   "dependencies": [
     {
-      "name": "@stylistic/eslint-plugin",
-      "version": "^2",
+      "name": "@eslint/eslintrc",
+      "type": "build"
+    },
+    {
+      "name": "@eslint/js",
       "type": "build"
     },
     {
@@ -15,12 +18,10 @@
     },
     {
       "name": "@typescript-eslint/eslint-plugin",
-      "version": "^8",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/parser",
-      "version": "^8",
       "type": "build"
     },
     {
@@ -34,6 +35,18 @@
       "type": "build"
     },
     {
+      "name": "dzuelu-projen",
+      "type": "build"
+    },
+    {
+      "name": "eslint",
+      "type": "build"
+    },
+    {
+      "name": "eslint-config-prettier",
+      "type": "build"
+    },
+    {
       "name": "eslint-import-resolver-typescript",
       "type": "build"
     },
@@ -42,8 +55,19 @@
       "type": "build"
     },
     {
-      "name": "eslint",
-      "version": "^9",
+      "name": "eslint-plugin-jest",
+      "type": "build"
+    },
+    {
+      "name": "eslint-plugin-n",
+      "type": "build"
+    },
+    {
+      "name": "eslint-plugin-perfectionist",
+      "type": "build"
+    },
+    {
+      "name": "eslint-plugin-prettier",
       "type": "build"
     },
     {
@@ -53,6 +77,10 @@
     {
       "name": "jest-junit",
       "version": "^16",
+      "type": "build"
+    },
+    {
+      "name": "prettier",
       "type": "build"
     },
     {
@@ -69,6 +97,10 @@
     },
     {
       "name": "typescript",
+      "type": "build"
+    },
+    {
+      "name": "typescript-eslint",
       "type": "build"
     }
   ],

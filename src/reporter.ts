@@ -1,33 +1,35 @@
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/no-confusing-void-expression, @typescript-eslint/await-thenable */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Test, TestCaseResult } from '@jest/test-result';
 import { state } from 'jest-metadata';
+// eslint-disable-next-line import/no-named-as-default
 import JestMetadataReporter from 'jest-metadata/reporter';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface MetaReporterParams {
-  /**
-   * Output default Jest output for tests with meta after.
-   * Default: true
-   */
-  outputDefault?: boolean;
+  // /**
+  //  * Output default Jest output for tests with meta after.
+  //  * Default: true
+  //  */
+  // outputDefault?: boolean;
 }
 
 export class MetaReporter extends JestMetadataReporter {
-  override onTestCaseResult(test: Test, testCaseResult: TestCaseResult) {
-    super.onTestCaseResult(test, testCaseResult);
+  override async onTestCaseResult(test: Test, testCaseResult: TestCaseResult) {
+    await super.onTestCaseResult(test, testCaseResult);
+    // if (testCaseResult.status !== 'failed') return;
 
-    const getIds = (iterator: Iterable<unknown>) => Array.from(iterator).flatMap((x: any) => x.id);
     const fileMeta = state.getTestFileMetadata(test.path);
+    const allTestInvocations = Array.from(fileMeta.allTestInvocations());
 
     console.log(`onTestCaseResult`, {
+      allTestInvocationsDefinition: allTestInvocations.map(i => i.definition),
+      allTestInvocationsFnGet: allTestInvocations.map(i => i.fn?.get()),
+      allTestInvocationsGet: allTestInvocations.map(i => i.get()),
+      allTestInvocationsIds: allTestInvocations.map(i => i.id),
       current: testCaseResult.fullName,
-      // currentMetadataId: state.currentMetadata.id,
-      // currentId: state.getTestFileMetadata(test.path).current.value()?.id,
-      // ids
-      // allDescribeBlocks: getIds(fileMeta.allDescribeBlocks()),
-      // allInvocations: getIds(fileMeta.allInvocations()),
-      // allTestEntries: getIds(fileMeta.allTestEntries()),
-      allTestInvocations: getIds(fileMeta.allTestInvocations()),
-      meta: JSON.stringify(Array.from(fileMeta.allTestInvocations())[0].fn?.get(), undefined, 2)
+      firstMeta: JSON.stringify(Array.from(fileMeta.allTestInvocations())[0].fn?.get(), undefined, 2),
+      secondMeta: JSON.stringify(Array.from(fileMeta.allTestInvocations())[1]?.fn?.get() ?? {}, undefined, 2)
     });
   }
 }

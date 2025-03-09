@@ -1,10 +1,10 @@
 import { metadata } from 'jest-metadata';
-import { parseId, pluginSpace } from './util';
+import { namespaceId } from './namespaceId';
 
 /**
  * Appends items to metadata
  * @param items Metadata items
  */
-export const push = (...items: never[]): void => {
-  metadata.push(`${pluginSpace}.${parseId()}`, items);
+export const push = (...items: unknown[]): void => {
+  metadata.push(namespaceId(), items);
 };

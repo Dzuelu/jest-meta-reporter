@@ -24,12 +24,12 @@ export class MetaReporter extends JestMetadataReporter {
 
     console.log(`onTestCaseResult`, {
       allTestInvocationsDefinition: allTestInvocations.map(i => i.definition),
-      allTestInvocationsFnGet: allTestInvocations.map(i => i.fn?.get()),
-      allTestInvocationsGet: allTestInvocations.map(i => i.get()),
+      allTestInvocationsFnGet: allTestInvocations.map(i => JSON.stringify(i.fn?.get())),
+      allTestInvocationsGet: allTestInvocations.map(i => JSON.stringify(i.get())),
       allTestInvocationsIds: allTestInvocations.map(i => i.id),
-      current: testCaseResult.fullName,
-      firstMeta: JSON.stringify(Array.from(fileMeta.allTestInvocations())[0].fn?.get(), undefined, 2),
-      secondMeta: JSON.stringify(Array.from(fileMeta.allTestInvocations())[1]?.fn?.get() ?? {}, undefined, 2)
+      current: testCaseResult.fullName
+      // firstMeta: JSON.stringify(Array.from(fileMeta.allTestInvocations())[0].fn?.get(), undefined, 2),
+      // secondMeta: JSON.stringify(Array.from(fileMeta.allTestInvocations())[1]?.fn?.get() ?? {}, undefined, 2)
     });
   }
 }

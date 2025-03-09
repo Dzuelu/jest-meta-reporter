@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression, @typescript-eslint/await-thenable */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 // import { Test, TestCaseResult } from '@jest/test-result';
-import type { Config, Test, TestCaseResult } from '@jest/reporters';
+import type { AggregatedResult, Config, ReporterOnStartOptions, Test, TestCaseResult, TestContext, TestResult } from '@jest/reporters';
 import { state } from 'jest-metadata';
 // eslint-disable-next-line import/no-named-as-default
 import JestMetadataReporter from 'jest-metadata/reporter';
@@ -9,22 +7,30 @@ import { parseId, pluginSpace } from './metadata/parseId';
 // eslint-disable-next-line perfectionist/sort-imports
 import { Data } from 'jest-metadata/dist/metadata';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface MetaReporterParams {
-  // /**
-  //  * Output default Jest output for tests with meta after.
-  //  * Default: true
-  //  */
-  // outputDefault?: boolean;
+  /**
+   * Output default Jest output for tests with meta after.
+   * Default: true
+   */
+  outputDefault: boolean;
 }
 
 export class MetaReporter extends JestMetadataReporter {
   options: MetaReporterParams;
 
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor(globalConfig: Config.GlobalConfig, options?: MetaReporterParams) {
+  constructor(globalConfig: Config.GlobalConfig, options?: Partial<MetaReporterParams>) {
     super(globalConfig);
-    this.options = {};
+    this.options = {
+      outputDefault: options?.outputDefault ?? true
+    };
+  }
+
+  override async onRunComplete(testContexts: Set<TestContext>, aggregatedResult: AggregatedResult): Promise<void> {
+    await super.onRunComplete(testContexts, aggregatedResult);
+  }
+
+  override async onRunStart(results: AggregatedResult, options: ReporterOnStartOptions): Promise<void> {
+    await super.onRunStart(results, options);
   }
 
   override onTestCaseResult(test: Test, testCaseResult: TestCaseResult) {
@@ -47,5 +53,17 @@ export class MetaReporter extends JestMetadataReporter {
     if (meta == null) return;
     console.log(`${testCaseResult.fullName} metadata:`);
     console.log(meta);
+  }
+
+  override onTestCaseStart(test: Test, testCaseStartInfo: unknown): void {
+    super.onTestCaseStart(test, testCaseStartInfo);
+  }
+
+  override onTestFileResult(test: Test, testResult: TestResult, aggregatedResult: AggregatedResult): void {
+    super.onTestFileResult(test, testResult, aggregatedResult);
+  }
+
+  override onTestFileStart(test: Test): void {
+    super.onTestFileStart(test);
   }
 }

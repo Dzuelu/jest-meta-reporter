@@ -1,5 +1,13 @@
-// import { Test, TestCaseResult } from '@jest/test-result';
-import type { AggregatedResult, Config, ReporterOnStartOptions, Test, TestCaseResult, TestContext, TestResult } from '@jest/reporters';
+import {
+  AggregatedResult,
+  Config,
+  DefaultReporter,
+  ReporterOnStartOptions,
+  Test,
+  TestCaseResult,
+  TestContext,
+  TestResult
+} from '@jest/reporters';
 import { state } from 'jest-metadata';
 // eslint-disable-next-line import/no-named-as-default
 import JestMetadataReporter from 'jest-metadata/reporter';
@@ -12,29 +20,33 @@ export interface MetaReporterParams {
    * Output default Jest output for tests with meta after.
    * Default: true
    */
-  outputDefault: boolean;
+  outputDefault?: boolean;
 }
 
 export class MetaReporter extends JestMetadataReporter {
-  options: MetaReporterParams;
+  defaultReporter?: DefaultReporter;
 
-  constructor(globalConfig: Config.GlobalConfig, options?: Partial<MetaReporterParams>) {
+  constructor(globalConfig: Config.GlobalConfig, options?: MetaReporterParams) {
     super(globalConfig);
-    this.options = {
-      outputDefault: options?.outputDefault ?? true
-    };
+
+    if (options?.outputDefault !== false) {
+      this.defaultReporter = new DefaultReporter(globalConfig);
+    }
   }
 
   override async onRunComplete(testContexts: Set<TestContext>, aggregatedResult: AggregatedResult): Promise<void> {
     await super.onRunComplete(testContexts, aggregatedResult);
+    this.defaultReporter?.onRunComplete();
   }
 
   override async onRunStart(results: AggregatedResult, options: ReporterOnStartOptions): Promise<void> {
     await super.onRunStart(results, options);
+    this.defaultReporter?.onRunStart(results, options);
   }
 
   override onTestCaseResult(test: Test, testCaseResult: TestCaseResult) {
     super.onTestCaseResult(test, testCaseResult);
+    this.defaultReporter?.onTestCaseResult(test, testCaseResult);
     // if (testCaseResult.status !== 'failed') return;
 
     // JS is single threaded so when we get the lastTestEntry, it should be the
@@ -61,9 +73,11 @@ export class MetaReporter extends JestMetadataReporter {
 
   override onTestFileResult(test: Test, testResult: TestResult, aggregatedResult: AggregatedResult): void {
     super.onTestFileResult(test, testResult, aggregatedResult);
+    this.defaultReporter?.onTestResult(test, testResult, aggregatedResult);
   }
 
   override onTestFileStart(test: Test): void {
     super.onTestFileStart(test);
+    this.defaultReporter?.onTestStart(test);
   }
 }

@@ -6,7 +6,8 @@ import {
   Test,
   TestCaseResult,
   TestContext,
-  TestResult
+  TestResult,
+  utils
 } from '@jest/reporters';
 import { state } from 'jest-metadata';
 // eslint-disable-next-line import/no-named-as-default
@@ -31,7 +32,28 @@ export class MetaReporter extends JestMetadataReporter {
 
     if (options?.outputDefault !== false) {
       this.defaultReporter = new DefaultReporter(globalConfig);
+
+      const hook = (testPath: string, result: TestResult) => {
+        result.testResults.forEach(assertion => {
+          if (assertion.status === 'failed') this.printMeta(testPath, assertion);
+        });
+      };
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      this.defaultReporter.printTestFileFailureMessage = function (testPath: string, _config: Config.ProjectConfig, result: TestResult) {
+        // Unchanged from DefaultReporter.printTestFileFailureMessage except for hook call to get as close as possible to failure output
+        if (result.failureMessage) {
+          this.log(result.failureMessage);
+          hook(testPath, result);
+        }
+        const didUpdate = this._globalConfig.updateSnapshot === 'all';
+        const snapshotStatuses = utils.getSnapshotStatus(result.snapshot, didUpdate);
+        for (const status of snapshotStatuses) this.log(status);
+      };
     }
+  }
+
+  log(message: string): void {
+    process.stderr.write(`${message}\n`);
   }
 
   override async onRunComplete(testContexts: Set<TestContext>, aggregatedResult: AggregatedResult): Promise<void> {
@@ -47,24 +69,8 @@ export class MetaReporter extends JestMetadataReporter {
   override onTestCaseResult(test: Test, testCaseResult: TestCaseResult) {
     super.onTestCaseResult(test, testCaseResult);
     this.defaultReporter?.onTestCaseResult(test, testCaseResult);
-    // if (testCaseResult.status !== 'failed') return;
-
-    // JS is single threaded so when we get the lastTestEntry, it should be the
-    // same as the test case result for this function.
-    const fileMetadata = state.getTestFileMetadata(test.path);
-    if (fileMetadata.lastTestEntry == null) return;
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    const invocationId = `${fileMetadata.lastTestEntry.id}.${(testCaseResult.invocations ?? 1) - 1}`;
-    const allTestInvocations = Array.from(fileMetadata.allTestInvocations());
-    const invocation = allTestInvocations.find(i => i.id === invocationId);
-    if (invocation?.fn == null) return;
-    const meta = [pluginSpace, ...parseId(invocationId).split('.')].reduce<Data | undefined>((obj, key) => {
-      return obj?.[key] as Data | undefined;
-    }, invocation.fn.get());
-
-    if (meta == null) return;
-    console.log(`${testCaseResult.fullName} metadata:`);
-    console.log(meta);
+    if (testCaseResult.status !== 'failed') return;
+    if (this.defaultReporter == null) this.printMeta(test.path, testCaseResult);
   }
 
   override onTestCaseStart(test: Test, testCaseStartInfo: unknown): void {
@@ -79,5 +85,24 @@ export class MetaReporter extends JestMetadataReporter {
   override onTestFileStart(test: Test): void {
     super.onTestFileStart(test);
     this.defaultReporter?.onTestStart(test);
+  }
+
+  printMeta(testPath: string, testCaseResult: TestCaseResult) {
+    // JS is single threaded so when we get the lastTestEntry, it should be the
+    // same as the test case result for this function.
+    const fileMetadata = state.getTestFileMetadata(testPath);
+    if (fileMetadata.lastTestEntry == null) return;
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    const invocationId = `${fileMetadata.lastTestEntry.id}.${(testCaseResult.invocations ?? 1) - 1}`;
+    const allTestInvocations = Array.from(fileMetadata.allTestInvocations());
+    const invocation = allTestInvocations.find(i => i.id === invocationId);
+    if (invocation?.fn == null) return;
+    const meta = [pluginSpace, ...parseId(invocationId).split('.')].reduce<Data | undefined>((obj, key) => {
+      return obj?.[key] as Data | undefined;
+    }, invocation.fn.get());
+
+    if (meta == null) return;
+    this.log(`${testCaseResult.fullName} metadata:`);
+    this.log(JSON.stringify(meta, undefined, 2));
   }
 }

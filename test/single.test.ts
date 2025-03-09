@@ -1,6 +1,4 @@
-import { metadata } from 'jest-metadata';
-// import { Meta } from '../src/index';
-import { get, set } from '../src/metadata';
+import { set } from '../src/metadata';
 
 describe('Login flow', () => {
   it('should login', () => {
@@ -8,7 +6,7 @@ describe('Login flow', () => {
     // metadata.set('mycompany-attachements', [{ filePath: '/path/to/screenshot.png', name: 'screenshot', type: 'image/png' }]);
     // Meta.set({ filePath: '/path/to/screenshot.png', name: 'screenshot', type: 'image/png' });
     set('test');
-    console.log('in test', { id: metadata.id, 'jest-metadata.get': metadata.get(), metadata, metaGet: get() });
+    // console.log('in test', { id: metadata.id, 'jest-metadata.get': metadata.get(), metadata, metaGet: get() });
     // ...
   });
 });

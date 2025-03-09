@@ -1,5 +1,5 @@
 import { metadata } from 'jest-metadata';
-import { namespaceId } from './namespaceId';
+import { namespaceId } from './parseId';
 
 /**
  * Appends items to metadata

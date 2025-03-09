@@ -1,5 +1,5 @@
 import { metadata } from 'jest-metadata';
-import { namespaceId } from './namespaceId';
+import { namespaceId } from './parseId';
 
 /**
  * Clear any previous metadata and set the current value

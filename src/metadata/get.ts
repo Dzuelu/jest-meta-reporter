@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
 import { metadata } from 'jest-metadata';
-import { namespaceId } from './namespaceId';
+import { namespaceId } from './parseId';
 
 /**
  * Returns any currently set metadata for the currently running test.

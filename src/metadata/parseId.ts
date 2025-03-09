@@ -8,11 +8,13 @@ export const pluginSpace = 'jest-meta-reporter';
  * @param metaId metadata.id
  * @returns
  */
-export const namespaceId = (metaId?: string): string => {
+export const parseId = (metaId?: string): string => {
   const splitId =
     // Used when reporter is trying to get the id
-    metaId ??
+    metaId?.split(':') ??
     // Used when in tests
     metadata.id.split(':');
-  return `${pluginSpace}/${splitId[splitId.length - 1].replace('.fn', '').replace('.', '-')}`;
+  return splitId[splitId.length - 1].replace('.fn', '');
 };
+
+export const namespaceId = (): string => `${pluginSpace}.${parseId()}`;

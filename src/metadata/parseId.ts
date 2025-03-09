@@ -10,7 +10,7 @@ export const pluginSpace = 'jest-meta-reporter';
  */
 export const parseId = (metaId?: string): string => {
   const splitId =
-    // Used when reporter is trying to get the id
+    // Used when the reporter is trying to get the id
     metaId?.split(':') ??
     // Used when in tests
     metadata.id.split(':');

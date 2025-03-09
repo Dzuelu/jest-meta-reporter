@@ -19,13 +19,16 @@ export interface MetaReporterParams {
 }
 
 export class MetaReporter extends JestMetadataReporter {
+  options: MetaReporterParams;
+
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor(globalConfig: Config.GlobalConfig) {
+  constructor(globalConfig: Config.GlobalConfig, options?: MetaReporterParams) {
     super(globalConfig);
+    this.options = {};
   }
 
-  override async onTestCaseResult(test: Test, testCaseResult: TestCaseResult) {
-    await super.onTestCaseResult(test, testCaseResult);
+  override onTestCaseResult(test: Test, testCaseResult: TestCaseResult) {
+    super.onTestCaseResult(test, testCaseResult);
     // if (testCaseResult.status !== 'failed') return;
 
     // JS is single threaded so when we get the lastTestEntry, it should be the
@@ -37,10 +40,12 @@ export class MetaReporter extends JestMetadataReporter {
     const allTestInvocations = Array.from(fileMetadata.allTestInvocations());
     const invocation = allTestInvocations.find(i => i.id === invocationId);
     if (invocation?.fn == null) return;
-    const meta = [pluginSpace, ...parseId(invocationId).split('.')].reduce<Readonly<Data>>((obj, key) => {
-      return obj[key] as Readonly<Data>;
+    const meta = [pluginSpace, ...parseId(invocationId).split('.')].reduce<Data | undefined>((obj, key) => {
+      return obj?.[key] as Data | undefined;
     }, invocation.fn.get());
 
+    if (meta == null) return;
+    console.log(`${testCaseResult.fullName} metadata:`);
     console.log(meta);
   }
 }

@@ -1,3 +1,12 @@
-import { JestMetaReporter } from './meta-reporter';
+import * as Reporter from './reporter';
+import * as Metadata from './metadata';
 
-export default JestMetaReporter;
+export const Meta = {
+  get: Metadata.get,
+  push: Metadata.push,
+  set: Metadata.set
+};
+
+export * from './reporter';
+
+export default Reporter.MetaReporter;

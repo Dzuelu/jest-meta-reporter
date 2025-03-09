@@ -184,6 +184,9 @@
       "description": "Run tests",
       "steps": [
         {
+          "exec": "rm -rf ./dist"
+        },
+        {
           "exec": "projen compile"
         },
         {

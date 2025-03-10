@@ -9,7 +9,8 @@ const project = new DzueluTypeScriptProject({
     },
     preserveDefaultReporters: false
   },
-  name: 'jest-meta-reporter'
+  name: 'jest-meta-reporter',
+  releaseToNpm: true
 });
 
 project.addDeps('jest-metadata');

@@ -30,7 +30,7 @@
     "@typescript-eslint/parser": "^8",
     "commit-and-tag-version": "^12",
     "constructs": "^10.0.0",
-    "dzuelu-projen": "^0.0.11",
+    "dzuelu-projen": "^0.0.13",
     "eslint": "^9",
     "eslint-config-prettier": "^10.1.1",
     "eslint-import-resolver-typescript": "^3.8.3",
@@ -47,6 +47,12 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.0"
+  },
+  "peerDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "jest-metadata": "^1.5.4"
   },
   "main": "dist/src/index.js",
   "license": "Apache-2.0",
@@ -83,7 +89,6 @@
       "/node_modules/"
     ],
     "reporters": [
-      "default",
       [
         "jest-junit",
         {

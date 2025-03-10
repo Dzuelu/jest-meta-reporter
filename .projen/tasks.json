@@ -184,6 +184,12 @@
       "description": "Run tests",
       "steps": [
         {
+          "exec": "rm -rf ./dist"
+        },
+        {
+          "exec": "projen compile"
+        },
+        {
           "exec": "jest --passWithNoTests --updateSnapshot",
           "receiveArgs": true
         },
@@ -226,13 +232,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@eslint/eslintrc,@eslint/js,@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,dzuelu-projen,eslint,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-jest,eslint-plugin-n,eslint-plugin-perfectionist,eslint-plugin-prettier,jest,prettier,projen,ts-jest,ts-node,typescript,typescript-eslint"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@eslint/eslintrc,@eslint/js,@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,dzuelu-projen,eslint,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-jest,eslint-plugin-n,eslint-plugin-perfectionist,eslint-plugin-prettier,jest,prettier,projen,ts-jest,ts-node,typescript,typescript-eslint,jest-metadata"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @eslint/eslintrc @eslint/js @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs dzuelu-projen eslint eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-jest eslint-plugin-n eslint-plugin-perfectionist eslint-plugin-prettier jest jest-junit prettier projen ts-jest ts-node typescript typescript-eslint"
+          "exec": "yarn upgrade @eslint/eslintrc @eslint/js @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs dzuelu-projen eslint eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-jest eslint-plugin-n eslint-plugin-perfectionist eslint-plugin-prettier jest jest-junit prettier projen ts-jest ts-node typescript typescript-eslint jest-metadata"
         },
         {
           "exec": "npx projen"

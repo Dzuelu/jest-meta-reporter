@@ -10,10 +10,8 @@ import {
   utils
 } from '@jest/reporters';
 import { state } from 'jest-metadata';
-// eslint-disable-next-line import/no-named-as-default
 import JestMetadataReporter from 'jest-metadata/reporter';
 import { parseId, pluginSpace } from './metadata/parseId';
-// eslint-disable-next-line perfectionist/sort-imports
 import { Data } from 'jest-metadata/dist/metadata';
 
 export interface MetaReporterParams {
@@ -96,7 +94,7 @@ export class MetaReporter extends JestMetadataReporter {
     // same as the test case result for this function.
     const fileMetadata = state.getTestFileMetadata(testPath);
     if (fileMetadata.lastTestEntry == null) return;
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+
     const invocationId = `${fileMetadata.lastTestEntry.id}.${(testCaseResult.invocations ?? 1) - 1}`;
     const allTestInvocations = Array.from(fileMetadata.allTestInvocations());
     const invocation = allTestInvocations.find(i => i.id === invocationId);

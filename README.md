@@ -13,8 +13,8 @@ If you're running tests in a **Node.js** environment, add the following lines to
 {
 +  "testEnvironment": "jest-metadata/environment-node",
 +  "reporters": [
-+    "default",
-+    ["jest-meta-reporter", { "outputDefault": true }]
+-    "default"
++    "jest-meta-reporter"
 +  ]
 }
 ```
@@ -30,3 +30,16 @@ If you need a **JSDOM** environment, you need change the test environment to:
 
 
 ## Options
+
+### outputDefault: boolean
+Builds a DefaultReporter and attempts to output metadata as close to the
+failing test as possible. 
+Default `true`.
+```json
+{
+  "reporters": [
+    "default",
+    ["jest-meta-reporter", { "outputDefault": false }]
+  ]
+}
+```

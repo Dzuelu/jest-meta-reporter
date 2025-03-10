@@ -63,7 +63,6 @@
   "version": "0.0.0",
   "jest": {
     "coverageProvider": "v8",
-    "testEnvironment": "jest-metadata/environment-node",
     "testMatch": [
       "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
       "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",
@@ -95,8 +94,7 @@
         {
           "outputDirectory": "test-reports"
         }
-      ],
-      "./dist/src/index.js"
+      ]
     ],
     "transform": {
       "^.+\\.[t]sx?$": [

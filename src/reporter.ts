@@ -23,7 +23,7 @@ export interface MetaReporterParams {
 }
 
 export class MetaReporter extends JestMetadataReporter {
-  defaultReporter?: DefaultReporter;
+  public defaultReporter?: DefaultReporter;
 
   constructor(globalConfig: Config.GlobalConfig, options?: MetaReporterParams) {
     super(globalConfig);

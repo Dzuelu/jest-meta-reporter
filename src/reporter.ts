@@ -33,6 +33,8 @@ export class MetaReporter extends JestMetadataReporter {
     if (options?.outputDefault !== false) {
       this.defaultReporter = new DefaultReporter(globalConfig);
 
+      // Not ideal, prints all failed test metadata after full file failure output
+      // So if multiple tests fail, the list will output and then the metadata will output
       const hook = (testPath: string, result: TestResult) => {
         result.testResults.forEach(assertion => {
           if (assertion.status === 'failed') this.printMeta(testPath, assertion);
@@ -41,6 +43,7 @@ export class MetaReporter extends JestMetadataReporter {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       this.defaultReporter.printTestFileFailureMessage = function (testPath: string, _config: Config.ProjectConfig, result: TestResult) {
         // Unchanged from DefaultReporter.printTestFileFailureMessage except for hook call to get as close as possible to failure output
+        // Is there a better way to do this???
         if (result.failureMessage) {
           this.log(result.failureMessage);
           hook(testPath, result);
@@ -70,6 +73,7 @@ export class MetaReporter extends JestMetadataReporter {
     super.onTestCaseResult(test, testCaseResult);
     this.defaultReporter?.onTestCaseResult(test, testCaseResult);
     if (testCaseResult.status !== 'failed') return;
+    // With no defaultReporter, default to outputting after each test
     if (this.defaultReporter == null) this.printMeta(test.path, testCaseResult);
   }
 

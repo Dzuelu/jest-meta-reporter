@@ -184,7 +184,8 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "rm -rf ./dist"
+          "exec": "rm -rf ./dist",
+          "condition": "node -e \"if (!process.env.GITHUB_ENV) process.exit(1)\""
         },
         {
           "exec": "projen compile"

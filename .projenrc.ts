@@ -22,7 +22,7 @@ project.addPeerDeps('jest');
 
 // compile the reporter so we can use it in this project
 project.testTask.prependExec('projen compile');
-project.testTask.prependExec('rm -rf ./dist');
+project.testTask.prependExec('rm -rf ./dist', { condition: 'node -e "if (!process.env.GITHUB_ENV) process.exit(1)"' });
 
 // TODO: something like this for e2e tests
 // const e2e = project.addTask('e2e', { exec: 'jest --testMatch "<rootDir>/@(e2e)/**/*(*.)@(spec|test).ts?(x)"' });

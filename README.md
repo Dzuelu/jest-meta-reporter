@@ -27,7 +27,53 @@ If you need a **JSDOM** environment, you need change the test environment to:
 }
 ```
 
+Use the `Meta` export and you can call `get`, `set`, or `push` to get or set the meta data.
 
+```typescript
+import { Meta } from 'jest-meta-reporter';
+
+describe('description', () => {
+  it('should', () => {
+    const id: string = someRandomId();
+    Meta.set(id);
+
+    const someOtherId: string = someRandomId();
+    Meta.push({ someOtherId });
+
+    expect(true).toBe(false);
+  });
+});
+```
+
+Running your test, the failure output should look similar to this
+
+```sh
+ FAIL  test/single.test.ts run...
+  ● description › should
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      13 |     Meta.push({ someOtherId });
+      14 |
+    > 15 |     expect(true).toBe(false);
+         |                  ^
+      16 |   });
+      17 | });
+      18 |
+
+      at Object.<anonymous> (test/single.test.ts:15:18)
+
+description should metadata:
+[
+  "random_123"
+  {
+    "someOtherId": "random_123"
+  }
+]
+``` 
 
 ## Options
 

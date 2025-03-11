@@ -1,9 +1,12 @@
 # jest-meta-reporter
 
-Are you tired of having to put `console.log` statements into your tests to debug when they fail, and then clean them out afterwords?
-Then `jest-meta-reporter` might be just the thing you need for your tests!
+Are you frustrated with constantly adding console.log statements to your tests in order to debug failed cases,
+only to have to go back and remove them afterward so they don't clog up the cli when running passing tests?
+If so, jest-meta-reporter is the perfect solution for streamlining your testing process!
 
-`jest-meta-reporter` allows you to set or push metadata into your tests and will only output when the test fails.
+With jest-meta-reporter, you can easily set or push custom metadata into your tests, and it will only output when a test fails.
+This eliminates the clutter of unnecessary logs during successful test runs, helping you keep your testing environment clean and focused.
+Say goodbye to the hassle of manual cleanup and hello to more efficient debugging!
 
 ## How to setup
 
@@ -19,7 +22,7 @@ If you're running tests in a **Node.js** environment, add the following lines to
 }
 ```
 
-If you need a **JSDOM** environment, you need change the test environment to:
+If you need a **JSDOM** environment, you need to change the above test environment to:
 
 ```diff
 {
@@ -27,18 +30,19 @@ If you need a **JSDOM** environment, you need change the test environment to:
 }
 ```
 
-Use the `Meta` export and you can call `get`, `set`, or `push` to get or set the meta data.
+Available exports are `get`, `set`, or `push`.
+The default is the Reporter for jest which you will not need for normal tests.
 
 ```typescript
-import { Meta } from 'jest-meta-reporter';
+import { push, set } from 'jest-meta-reporter';
 
-describe('description', () => {
-  it('should', () => {
+describe('When the world', () => {
+  it('should expect the impossible', () => {
     const id: string = someRandomId();
-    Meta.set(id);
+    set(id);
 
     const someOtherId: string = someRandomId();
-    Meta.push({ someOtherId });
+    push({ someOtherId });
 
     expect(true).toBe(false);
   });
@@ -49,7 +53,7 @@ Running your test, the failure output should look similar to this
 
 ```sh
  FAIL  test/single.test.ts run...
-  ● description › should
+  ● When the world › should expect the impossible
 
     expect(received).toBe(expected) // Object.is equality
 
@@ -66,27 +70,35 @@ Running your test, the failure output should look similar to this
 
       at Object.<anonymous> (test/single.test.ts:15:18)
 
-description should metadata:
+When the world > should expect the impossible metadata:
 [
   "random_123"
   {
-    "someOtherId": "random_123"
+    "someOtherId": "random_456"
   }
 ]
-``` 
+```
 
 ## Options
 
 ### outputDefault: boolean
-Builds a DefaultReporter and attempts to output metadata as close to the
-failing test as possible. 
+Builds a DefaultReporter and attempts to output metadata as close to the failing test as possible.
+Note that if multiple tests fail in the same test file, the test default reporter will output all
+failed tests and then jest-meta-reporter will output any failed test metadata.
 Default `true`.
 ```json
 {
   "reporters": [
     "default",
-    ["jest-meta-reporter", { "outputDefault": false }]
+    ["jest-meta-reporter", { "outputDefault": true }]
   ]
 }
 ```
 
+## Development
+Repo is managed with projen, any config besides eslint (currently) should be changed in the `.projenrc.ts` file.
+Setup dependencies with `yarn install` first.
+Lint with `yarn eslint` or `npx projen eslint`.
+Test with `yarn test` or `npx projen test`.
+The build script will lint, test, and bundle.
+Released when merged to main branch.

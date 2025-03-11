@@ -1,5 +1,4 @@
 import { DzueluTypeScriptProject } from 'dzuelu-projen';
-// import { JestReporter } from 'projen/lib/javascript';
 
 const project = new DzueluTypeScriptProject({
   defaultReleaseBranch: 'main',

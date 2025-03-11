@@ -102,3 +102,9 @@ Lint with `yarn eslint` or `npx projen eslint`.
 Test with `yarn test` or `npx projen test`.
 The build script will lint, test, and bundle.
 Released when merged to main branch.
+
+
+### ToDo Improvements
+- Metadata output formatting? Using `JSON.stringify(data, undefined, 2)` good enough?
+- 'Attaching' to default reporter to output. If multiple tests in file fail, meta is output in a clump after test fail output.
+  Maybe implement custom output instead? Or use jest output formatting per test instead?

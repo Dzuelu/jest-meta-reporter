@@ -1,6 +1,6 @@
 import { e2eJest } from './e2eJest';
 
-it("set overrides any previous value", () => {
+it('set overrides any previous value', () => {
   const result = e2eJest('push-non-destructive');
   expect(result.stderr).toStrictEqual(
     [

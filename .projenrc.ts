@@ -22,6 +22,7 @@ project.testTask.prependExec('rm -rf ./dist', {
   condition: 'node -e "if (process.env.GITHUB_ENV) process.exit(1)"'
 });
 
-project.tsconfig?.addExclude('e2e/**');
+project.tsconfig?.addInclude('e2e/**/*.ts');
+project.tsconfig?.addInclude('test/**/*.ts');
 
 project.synth();

@@ -1,3 +1,4 @@
+// @ts-ignore
 const { Meta } = require('../../dist/src/index');
 
 it('multiple-sets', () => {

@@ -17,6 +17,7 @@ const project = new DzueluTypeScriptProject({
   releaseToNpm: true
 });
 
+project.addDevDeps('execa@5');
 project.addDeps('jest-metadata');
 project.addPeerDeps('jest');
 
@@ -29,5 +30,7 @@ project.testTask.prependExec('rm -rf ./dist', { condition: 'node -e "if (process
 // project.testTask.spawn(e2e);
 
 // project.jest?.addReporter(new JestReporter('./dist/src/index.js'));
+
+project.tsconfig?.addExclude('e2e/**');
 
 project.synth();

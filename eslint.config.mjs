@@ -1,5 +1,6 @@
-import { defaultLint, jest } from 'dzuelu-projen/dist/src/lint.js';
+import { defaultLint, ignores } from 'dzuelu-projen/dist/src/lint.js';
 
-jest.files.push('e2e/**.ts');
+// todo find a better way
+ignores.ignores.push('e2e');
 
 export default defaultLint;

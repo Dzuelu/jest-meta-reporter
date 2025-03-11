@@ -32,6 +32,7 @@
     "projenrc/**/*.ts"
   ],
   "exclude": [
-    ".projenrc.ts"
+    ".projenrc.ts",
+    "e2e/**"
   ]
 }

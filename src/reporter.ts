@@ -90,8 +90,6 @@ export class MetaReporter extends JestMetadataReporter {
   }
 
   printMeta(testPath: string, testCaseResult: TestCaseResult) {
-    // JS is single threaded so when we get the lastTestEntry, it should be the
-    // same as the test case result for this function.
     const fileMetadata = state.getTestFileMetadata(testPath);
     if (fileMetadata.lastTestEntry == null) return;
 
@@ -104,7 +102,8 @@ export class MetaReporter extends JestMetadataReporter {
     }, invocation.fn.get());
 
     if (meta == null) return;
-    this.log(`${testCaseResult.fullName} metadata:`);
+    const fullTitle = [...testCaseResult.ancestorTitles, testCaseResult.title];
+    this.log(`${fullTitle.join(' > ')} metadata:`);
     this.log(JSON.stringify(meta, undefined, 2));
   }
 }

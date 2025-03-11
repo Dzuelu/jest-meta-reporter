@@ -9,6 +9,6 @@ import { get } from './get';
  */
 export const push = (...items: unknown[]): void => {
   const currentMeta = get();
-  if (!Array.isArray(currentMeta)) metadata.set(namespaceId(), [currentMeta]);
+  if (currentMeta != null && !Array.isArray(currentMeta)) metadata.set(namespaceId(), [currentMeta]);
   metadata.push(namespaceId(), items);
 };

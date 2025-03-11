@@ -8,10 +8,10 @@ const project = new DzueluTypeScriptProject({
     dirs: ['src']
   },
   jestOptions: {
-    jestConfig: {
-      // testEnvironment: 'jest-metadata/environment-node'
-    },
-    preserveDefaultReporters: false
+    // jestConfig: {
+    //   testEnvironment: 'jest-metadata/environment-node'
+    // },
+    // preserveDefaultReporters: false
   },
   name: 'jest-meta-reporter',
   releaseToNpm: true

@@ -71,6 +71,11 @@
       "type": "build"
     },
     {
+      "name": "execa",
+      "version": "5",
+      "type": "build"
+    },
+    {
       "name": "jest",
       "type": "build"
     },

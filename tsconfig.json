@@ -28,6 +28,8 @@
     "src/**/*.ts",
     "*.ts",
     "*/**.ts",
+    "e2e/**/*.ts",
+    "test/**/*.ts",
     ".projenrc.ts",
     "projenrc/**/*.ts"
   ],

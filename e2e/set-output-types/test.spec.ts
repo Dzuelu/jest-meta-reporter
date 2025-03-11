@@ -41,7 +41,7 @@ it('object', () => {
 });
 
 it('array', () => {
-  Meta.set([1, '2', 3, '4', 5]);
+  Meta.set([1, '2', null, undefined, NaN]);
   expect(true).toBe(false);
 });
 

@@ -32,9 +32,9 @@ it("sets and outputs types correctly (or doesn't and is called out)", () => {
       '[',
       '  1,',
       '  "2",',
-      '  3,',
-      '  "4",',
-      '  5',
+      '  null,',
+      '  null,', // undefined
+      '  null', // NaN
       ']'
       // 'null metadata:', // does not output
       // 'null',

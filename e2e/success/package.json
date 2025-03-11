@@ -1,6 +1,6 @@
 {
   "jest": {
     "testEnvironment": "jest-metadata/environment-node",
-    "reporters": ["../../dist/src/index.js"]
+    "reporters": [["../../dist/src/index.js", { "outputDefault": false }]]
   }
 }

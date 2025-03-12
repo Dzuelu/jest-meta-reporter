@@ -1,36 +1,36 @@
 // @ts-ignore
-const { Meta } = require('../../dist/src/index');
+const { get, set } = require('../../dist/src/index');
 
 // no output is good output
 
 it('string', () => {
-  Meta.set('some_string');
-  expect(Meta.get()).toStrictEqual('some_string');
+  set('some_string');
+  expect(get()).toStrictEqual('some_string');
 });
 
 it('number', () => {
-  Meta.set(123);
-  expect(Meta.get()).toStrictEqual(123);
+  set(123);
+  expect(get()).toStrictEqual(123);
 });
 
 it('boolean:true', () => {
-  Meta.set(true);
-  expect(Meta.get()).toStrictEqual(true);
+  set(true);
+  expect(get()).toStrictEqual(true);
 });
 
 it('boolean:false', () => {
-  Meta.set(false);
-  expect(Meta.get()).toStrictEqual(false);
+  set(false);
+  expect(get()).toStrictEqual(false);
 });
 
 it('array', () => {
   const arr = [1, 2, 3];
-  Meta.set(arr);
-  expect(Meta.get()).toEqual(expect.arrayContaining(arr));
+  set(arr);
+  expect(get()).toEqual(expect.arrayContaining(arr));
 });
 
 it('object', () => {
   const obj = { string: 'obj', num: 3, bool: true };
-  Meta.set(obj);
-  expect(Meta.get()).toMatchObject(obj);
+  set(obj);
+  expect(get()).toMatchObject(obj);
 });

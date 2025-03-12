@@ -1,28 +1,28 @@
 // @ts-ignore
-const { Meta } = require('../../dist/src/index');
+const { set } = require('../../dist/src/index');
 
 it('string', () => {
-  Meta.set('some_string');
+  set('some_string');
   expect(true).toBe(false);
 });
 
 it('number', () => {
-  Meta.set(123456);
+  set(123456);
   expect(true).toBe(false);
 });
 
 it('boolean:true', () => {
-  Meta.set(true);
+  set(true);
   expect(true).toBe(false);
 });
 
 it('boolean:false', () => {
-  Meta.set(false);
+  set(false);
   expect(true).toBe(false);
 });
 
 it('object', () => {
-  Meta.set({
+  set({
     root: {
       child1: {
         child2: {
@@ -41,21 +41,21 @@ it('object', () => {
 });
 
 it('array', () => {
-  Meta.set([1, '2', null, undefined, NaN]);
+  set([1, '2', null, undefined, NaN]);
   expect(true).toBe(false);
 });
 
 it('null', () => {
-  Meta.set(null);
+  set(null);
   expect(true).toBe(false);
 });
 
 it('undefined', () => {
-  Meta.set(undefined);
+  set(undefined);
   expect(true).toBe(false);
 });
 
 it('NaN', () => {
-  Meta.set(NaN);
+  set(NaN);
   expect(true).toBe(false);
 });

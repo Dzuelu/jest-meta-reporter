@@ -1,14 +1,14 @@
 // @ts-ignore
-const { Meta } = require('../../dist/src/index');
+const { set, push } = require('../../dist/src/index');
 
 it('multiple-sets', () => {
-  Meta.set('first set');
-  Meta.set('last set');
+  set('first set');
+  set('last set');
   expect(true).toBe(false);
 });
 
 it('push-then-set', () => {
-  Meta.push('push');
-  Meta.set('set');
+  push('push');
+  set('set');
   expect(true).toBe(false);
 });
